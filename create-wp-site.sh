@@ -68,13 +68,13 @@ function site_local_domain(){
 
 
     printf "  ----------------------------------------------------------------------  \n"
-    printf "  Select a local domain, this should be an entire TLD for example ${G}mysite.dev{N}\n"
+    printf "  Select a local domain, this should be an entire TLD for example ${G}mysite.tst{N}\n"
     printf "    - If you are setting up a multisite, you are going to have to add this to your hosts file \n"
     printf "        pointing to the IP address you set in the ${G}Vagrantfile${N} \n"
     printf "    - If this is a single site install this will automatically be added to your hosts file\n"
     printf "\n  ----------------------------------------------------------------------  \n"
     printf "                                                                          \n\n"
-    printf "Domain name (e.g. example.dev): "
+    printf "Domain name (e.g. example.tst): "
     read DEV_DOMAIN
 
     if [ ! $SITE_DIRECTORY ] || [ $SITE_DIRECTORY == "" ]; then
@@ -135,7 +135,7 @@ function get_and_create_site_directory() {
 function clone_trellis(){
 	log "Cloning trellis in $SITE_DIRECTORY ..."
 	cd $SITE_DIRECTORY
-	git clone $TRELLIS_REPO trellis
+	git clone $TRELLIS_REPO trellis --depth=1
 	rm -rf trellis/.git
 }
 
@@ -161,8 +161,8 @@ function log(){
 }
 
 function find_replace(){
-    log "Finding and replacing ${G}example.dev${N} and ${G}example.com${N} with $DEV_DOMAIN"
-    find $SITE_DIRECTORY/trellis/group_vars/development -type f | xargs sed -i '' "s/example.dev/$DEV_DOMAIN/g"
+    log "Finding and replacing ${G}example.tst${N} and ${G}example.com${N} with $DEV_DOMAIN"
+    find $SITE_DIRECTORY/trellis/group_vars/development -type f | xargs sed -i '' "s/example.tst/$DEV_DOMAIN/g"
     find $SITE_DIRECTORY/trellis/group_vars/development -type f | xargs sed -i '' "s/example.com/$DEV_DOMAIN/g"
 }
 
